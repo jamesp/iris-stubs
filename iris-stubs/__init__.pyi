@@ -2,7 +2,7 @@ from iris.cube import Cube, CubeList
 import iris.io
 import threading
 from iris._deprecation import IrisDeprecation as IrisDeprecation
-from typing import Any, Iterable, Optional, Union
+from typing import Any, Iterable, Optional, TYPE_CHECKING, Union
 
 from iris._constraints import Constraint, AttributeConstraint, NameConstraint
 

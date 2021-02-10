@@ -1,6 +1,8 @@
 from collections import namedtuple
 from iris.cube import Cube
-from typing import Any, Iterable, Optional, Protocol, overload
+from typing import Any, Iterable, Optional, Protocol, TYPE_CHECKING, overload
+
+from numpy.typing import ArrayLike
 
 # _AuxCoverage = namedtuple('AuxCoverage', ['cube', 'common_items_aux', 'common_items_scalar', 'local_items_aux', 'local_items_scalar', 'dims_common', 'dims_local', 'dims_free'])
 
@@ -15,9 +17,6 @@ from typing import Any, Iterable, Optional, Protocol, overload
 # _PreparedItem = namedtuple('PreparedItem', ['metadata', 'points', 'bounds', 'dims', 'container'])
 
 # _PreparedMetadata = namedtuple('PreparedMetadata', ['combined', 'src', 'tgt'])
-
-class Shaped(Protocol):
-    shape: Iterable[int]
 
 class Resolve:
     lhs_cube: Cube = ...
@@ -39,13 +38,13 @@ class Resolve:
     prepared_factories: Any = ...
 
     @overload
-    def __init__(self, lhs: Cube, rhs: Cube) -> None: ...
+    def __init__(self, lhs: Cube = ..., rhs: Cube = ...) -> None: ...
     @overload
     def __init__(self, lhs: None, rhs: None) -> None: ...
 
     def __call__(self, lhs: Cube, rhs: Cube) -> Resolve: ...
     
-    def cube(self, data: Shaped, in_place: bool = ...) -> Cube: ...
+    def cube(self, data: ArrayLike, in_place: bool = ...) -> Cube: ...
     
     @property
     def mapped(self) -> bool: ...
