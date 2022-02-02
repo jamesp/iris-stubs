@@ -4,6 +4,8 @@ from typing import Any, Iterable, Literal, Mapping, Optional, Tuple, TypeVar, Un
 
 from cf_units import Unit
 
+from dask.array import Array as DaskArray
+
 from iris.coords import CellMeasure, CellMethod, DimCoord, AuxCoord, Coord, AncillaryVariable, CoordExtent
 from iris.coord_systems import CoordSystem
 from iris.common import CFVariableMixin, CubeMetadata
@@ -11,6 +13,8 @@ from iris.aux_factory import AuxCoordFactory
 from iris._constraints import Constraint
 from iris.analysis import Aggregator, Linear, Nearest, AreaWeighted, UnstructuredNearest, PointInCell
 
+from numpy import ndarray
+from numpy.ma import MaskedArray
 from numpy.typing import DTypeLike, ArrayLike
 
 
@@ -18,9 +22,8 @@ T = TypeVar("T")
 OneOrMany = Union[T, Iterable[T]]
 StrOr = Union[str, T]  # for functions that take name or object with name
 
-# TODO: Replace with proper types
-RealData = ArrayLike
-LazyData = ArrayLike
+RealData = Union[ndarray, MaskedArray]
+LazyData = DaskArray
 RealOrLazyData = Union[RealData, LazyData]
 
 AxisType = Literal["X", "Y", "Z", "T"]
